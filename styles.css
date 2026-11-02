@@ -250,12 +250,10 @@ input.bad,textarea.bad{border-color:#c25a45}
 .foot-brand img{height:56px;width:auto;margin-bottom:16px}
 .legal:empty{display:none}
 .legal{font-size:14px;line-height:1.8;color:#c9d4e3}
-.legal.kv{display:flex;gap:10px;align-items:baseline}
-.legal.kv>span:first-child{min-width:120px}
 .contact{align-self:end}
 .contact li{display:flex;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:15px}
 .contact li>span:first-child{color:var(--mint);font-size:13px;min-width:120px}
-.contact a{color:#fff}
+.contact a,.contact li>span+span{color:#fff}
 
 .print-doc{display:none}
 
