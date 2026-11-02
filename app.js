@@ -146,7 +146,7 @@ function nawaBoot(PRE) {
       pr_f1: 'NAWA | Nawat Al Takwin LLC · Saudi limited liability company · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'CR National No. 7053936733 · VAT No. 314703130800003 · Al Arid, Riyadh 13338, Saudi Arabia',
       eyebrow_for: function (n) { return 'PREPARED FOR ' + n; },
-      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome, our future partner', intro_ready: 'The NAWA catalogue, prepared for you', intro_hope: 'We look forward to a partnership that serves your patients', intro_enter: 'Next',
+      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome, our future partner', intro_ready: 'The NAWA catalogue, prepared for you — we look forward to a mutually beneficial partnership', intro_enter: 'Next',
       f_locked: 'Set for your clinic', msg_ref: function (r) { return 'Reference: ' + r; },
       desc: 'desc_en', unit: 'unit_en'
     },
@@ -217,7 +217,7 @@ function nawaBoot(PRE) {
       pr_f1: 'نواة التكوين — شركة ذات مسؤولية محدودة · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'السجل التجاري 7053936733 · الرقم الضريبي 314703130800003 · العارض، الرياض 13338، المملكة العربية السعودية',
       eyebrow_for: function (n) { return 'مُعدّ خصيصًا لـ ' + n; },
-      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بشريكنا المستقبلي', intro_ready: 'كتالوج نواة المُعدّ لكم', intro_hope: 'نتطلّع لشراكة تخدم مرضاكم', intro_enter: 'التالي',
+      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بشريكنا المستقبلي', intro_ready: 'كتالوج نواة المُعدّ لكم، ونتطلّع لشراكة نتبادل فيها المنفعة', intro_enter: 'التالي',
       f_locked: 'محدّد لعيادتكم', msg_ref: function (r) { return 'المرجع: ' + r; },
       desc: 'desc', unit: 'unit'
     }
@@ -710,9 +710,8 @@ function nawaBoot(PRE) {
         '<p class="intro-eyebrow rise d4">' + esc(T('intro_welcome')) + '</p>' +
         '<h2 class="intro-name rise d5"><bdi>' + esc(CFG.n) + '</bdi></h2>' +
         '<p class="intro-line rise d6">' + esc(T('intro_ready')) + '</p>' +
-        '<p class="intro-hope rise d7">' + esc(T('intro_hope')) + '</p>' +
-        '<div class="intro-bar" aria-hidden="true"><i></i></div>' +
-        '<button type="button" class="intro-enter rise d9">' + esc(T('intro_enter')) + '</button>' +
+        '<div class="intro-bar rise d7" aria-hidden="true"><i></i></div>' +
+        '<button type="button" class="intro-enter rise d8">' + esc(T('intro_enter')) + '</button>' +
       '</div>';
     var pb = ov.querySelector('#ibPartner');
     function mono() {
@@ -748,6 +747,7 @@ function nawaBoot(PRE) {
     document.addEventListener('keydown', onKey, true);
     enter.addEventListener('click', close);
     enter.focus({ preventScroll: true });
+    setTimeout(function () { ov.classList.add('settled'); }, 2300);
   }
 
   /* ---------- init ---------- */
