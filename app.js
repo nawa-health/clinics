@@ -1,4 +1,4 @@
-(function () {
+function nawaBoot(PRE) {
   'use strict';
   var CATALOG = window.NAWA_CATALOG || [];
   var STORE_BASE = 'nawa_clinics_v1';
@@ -33,31 +33,35 @@
     return new TextDecoder().decode(bytes);
   }
   function clip(v, n) { return typeof v === 'string' ? v.trim().slice(0, n) : ''; }
+  function normalizeConfig(o, raw, code) {
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return null;
+    var n = clip(o.n, 120);
+    if (!n) return null;
+    var keys = Array.isArray(o.k) ? o.k.filter(function (k, i, arr) {
+      return typeof k === 'string' && arr.indexOf(k) === i && CATALOG.some(function (c) { return c.key === k; });
+    }) : [];
+    var s = {};
+    if (o.s && typeof o.s === 'object' && !Array.isArray(o.s)) {
+      Object.keys(o.s).forEach(function (c) {
+        var q = parseInt(o.s[c], 10);
+        s[String(c).toUpperCase()] = isNaN(q) || q < 0 ? 1 : Math.min(q, 99999999);
+      });
+    }
+    var r = typeof o.r === 'string' ? o.r.replace(/[^A-Za-z0-9-]/g, '').slice(0, 32) : '';
+    if (code) r = code.toUpperCase();
+    return {
+      n: n, ci: clip(o.ci, 80), d: clip(o.d, 80), k: keys, s: s,
+      l: o.l === 'ar' || o.l === 'en' ? o.l : '',
+      r: r,
+      lg: lgOk(o.lg) ? o.lg : '',
+      raw: raw || '', code: code || ''
+    };
+  }
   function parseConfig() {
     try {
       var m = /[#&]c=([A-Za-z0-9_=-]+)/.exec(location.hash);
       if (!m) return null;
-      var o = JSON.parse(b64uDecode(m[1]));
-      if (!o || typeof o !== 'object' || Array.isArray(o)) return null;
-      var n = clip(o.n, 120);
-      if (!n) return null;
-      var keys = Array.isArray(o.k) ? o.k.filter(function (k, i, arr) {
-        return typeof k === 'string' && arr.indexOf(k) === i && CATALOG.some(function (c) { return c.key === k; });
-      }) : [];
-      var s = {};
-      if (o.s && typeof o.s === 'object' && !Array.isArray(o.s)) {
-        Object.keys(o.s).forEach(function (c) {
-          var q = parseInt(o.s[c], 10);
-          s[String(c).toUpperCase()] = isNaN(q) || q < 0 ? 1 : Math.min(q, 99999999);
-        });
-      }
-      return {
-        n: n, ci: clip(o.ci, 80), d: clip(o.d, 80), k: keys, s: s,
-        l: o.l === 'ar' || o.l === 'en' ? o.l : '',
-        r: typeof o.r === 'string' ? o.r.replace(/[^A-Za-z0-9-]/g, '').slice(0, 24) : '',
-        lg: lgOk(o.lg) ? o.lg : '',
-        raw: m[1]
-      };
+      return normalizeConfig(JSON.parse(b64uDecode(m[1])), m[1], '');
     } catch (e) { return null; }
   }
   function lgOk(v) {
@@ -66,7 +70,7 @@
     if (v.length > 600) return false;
     return /^https?:\/\//i.test(v) || /^assets\/partners\/[A-Za-z0-9._-]+\.(png|webp|svg)$/.test(v);
   }
-  var CFG = parseConfig();
+  var CFG = PRE ? normalizeConfig(PRE.o, '', PRE.code) : parseConfig();
   var SFX = CFG ? ':' + (CFG.r || 'n:' + CFG.n.toLowerCase()) : '';
   var STORE = STORE_BASE + SFX;
   var LANG_KEY2 = STORE + ':lang';
@@ -561,6 +565,10 @@
       if (CFG.l) o.l = CFG.l;
       if (CFG.r) o.r = CFG.r;
       selCodes().forEach(function (k) { o.s[k] = sel[k] == null ? 1 : sel[k]; });
+      if (CFG.code) {
+        var ps = selCodes().map(function (k) { return k + ':' + (sel[k] == null ? 1 : sel[k]); });
+        return location.href.split('#')[0].split('?')[0] + '?' + CFG.code + (ps.length ? '#sel=' + ps.join(',') : '');
+      }
       return location.href.split('#')[0] + '#c=' + b64uEncode(JSON.stringify(o));
     }
     var parts = selCodes().map(function (k) { return k + ':' + (sel[k] == null ? 1 : sel[k]); });
@@ -748,7 +756,32 @@
   document.documentElement.classList.remove('intro-pre');
   if (fromHash) {
     save();
-    try { history.replaceState(null, '', location.pathname + location.search + (CFG ? '#c=' + CFG.raw : '')); } catch (e) { }
+    try { history.replaceState(null, '', location.pathname + location.search + (CFG && CFG.raw ? '#c=' + CFG.raw : '')); } catch (e) { }
     setTimeout(function () { var q = $('#quote'); if (q) q.scrollIntoView(); }, 50);
   }
+}
+
+/* ---------- bootstrap: short code (?alrida / ?c=alrida) or classic ---------- */
+(function () {
+  function shortCode() {
+    if (/[#&]c=[A-Za-z0-9_=-]/.test(location.hash)) return '';
+    var q = location.search.replace(/^\?/, '').split('&'), i, m;
+    for (i = 0; i < q.length; i++) {
+      if ((m = /^c=([A-Za-z0-9-]{2,32})$/i.exec(q[i]))) return m[1].toLowerCase();
+    }
+    for (i = 0; i < q.length; i++) {
+      if (/^[A-Za-z0-9-]{2,32}$/.test(q[i])) return q[i].toLowerCase();
+    }
+    return '';
+  }
+  var code = shortCode();
+  if (!code) { nawaBoot(null); return; }
+  var done = false;
+  function go(o) {
+    if (done) return; done = true;
+    nawaBoot(o ? { o: o, code: code } : null);
+  }
+  fetch('clinics/' + code + '.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(go, function () { go(null); });
 })();
