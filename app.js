@@ -44,13 +44,13 @@ function nawaBoot(PRE) {
     if (o.s && typeof o.s === 'object' && !Array.isArray(o.s)) {
       Object.keys(o.s).forEach(function (c) {
         var q = parseInt(o.s[c], 10);
-        s[String(c).toUpperCase()] = isNaN(q) || q < 0 ? 1 : Math.min(q, 99999999);
+        s[String(c).toUpperCase()] = isNaN(q) || q < 0 ? 0 : Math.min(q, 99999999);
       });
     }
     var r = typeof o.r === 'string' ? o.r.replace(/[^A-Za-z0-9-]/g, '').slice(0, 32) : '';
     if (code) r = code.toUpperCase();
     return {
-      n: n, ci: clip(o.ci, 80), d: clip(o.d, 80), k: keys, s: s,
+      n: n, ne: clip(o.ne, 120), ci: clip(o.ci, 80), d: clip(o.d, 80), k: keys, s: s,
       l: o.l === 'ar' || o.l === 'en' ? o.l : '',
       r: r,
       lg: lgOk(o.lg) ? o.lg : '',
@@ -88,7 +88,8 @@ function nawaBoot(PRE) {
       eyebrow: 'CLINIC PARTNERSHIPS', hero_h1: 'One laboratory partner for your clinic',
       hero_lead: 'NAWA supplies your clinic with genetic testing, general laboratory tests and IVF consumables. Choose what fits your practice and we will send you a tailored quotation.',
       hero_browse: 'Browse the catalogue',
-      figs_aria: 'Catalogue figures', fig_items: 'items in the catalogue', fig_catalogs: 'catalogues', fig_cats: 'categories',
+      figs_aria: 'Catalogue figures', fig_items: 'items in the catalogue',
+      price_note: 'Prices are included in the tailored quotation we send you.',
       svc_title: 'Services for clinics', svc_sub: 'Five services that support your clinic, from pricing to clinical support.',
       svc1_t: 'Test pricing', svc1_d: 'A clear quotation tailored to your clinic, based on the tests you select.',
       svc2_t: 'Sample collection', svc2_d: "Collection arrangements that fit your clinic's workflow.",
@@ -96,7 +97,7 @@ function nawaBoot(PRE) {
       svc4_t: 'Staff orientation', svc4_d: 'Guidance for your team on ordering and sample handling.',
       svc5_t: 'Clinical support', svc5_d: 'A team available to answer your questions about the tests.',
       how_title: 'How it works',
-      step1_t: 'Select', step1_p: 'Select tests or products from the catalogue.',
+      step1_t: 'Choose', step1_p: 'Select tests or products from the catalogue.',
       step2_t: 'Estimate', step2_p: 'Enter the expected monthly volume for each item.',
       step3_t: 'Send', step3_p: 'Send the request and receive a tailored quotation for your clinic.',
       cat_title: 'Catalogue', tabs_aria: 'Catalogues', search_label: 'Search the catalogue',
@@ -107,12 +108,13 @@ function nawaBoot(PRE) {
       res_all: function (n) { return n + (n === 1 ? ' item shown' : ' items shown'); },
       empty: function (all) { return 'No matching results. Try another keyword' + (all ? '.' : ', or enable search across all catalogues.'); },
       quote_title: 'Request a quotation',
-      quote_sub: 'Tell us which tests your clinic would like to offer. Select catalogue items, estimate your monthly volumes and send the request to NAWA for a tailored quotation.',
-      sel_head: 'Products for quotation', copy_link: 'Copy list link', clear_all: 'Clear list',
+      quote_sub: 'Review your list, add quantities, and complete your clinic details.',
+      qty_hint: 'Add monthly quantities where you can — it helps us price accurately.', qty_ph: 'Qty', qty_none: 'quantity not specified',
+      sel_head: 'Quotation list', copy_link: 'Copy list link', clear_all: 'Clear list',
       clear_confirm: 'Remove all items from the list?',
       sel_empty: 'You have not selected any items yet. ', sel_back: 'Back to the catalogue',
       qty_unit: function (u) { return 'Quantity: ' + u; },
-      th_code: 'Catalogue ID', th_name: 'Test / product', th_qty: function (u) { return cap(u); }, th_rm: 'Remove',
+      th_code: 'Code', th_name: 'Test / product', th_qty: function (u) { return cap(u); }, th_rm: 'Remove',
       qty_aria: function (k) { return 'Quantity ' + k; }, rm_aria: function (k) { return 'Remove ' + k; },
       form_head: 'Clinic and contact details',
       f_clinic: 'Clinic / organisation name', f_city: 'City', f_dept: 'Department / specialty', f_contact: 'Contact person',
@@ -123,7 +125,12 @@ function nawaBoot(PRE) {
       req_orientation: 'Staff orientation', req_support: 'Clinical support', req_other: 'Other',
       f_notes: 'Additional requirements / preferred reporting or logistics arrangements',
       send_wa: 'Send via WhatsApp', send_mail: 'Send by email', print: 'Save PDF / Print',
-      mail_note: 'The list is long, so the email contains a shortened version. Save the list as a PDF and attach it to your message.',
+      long_note: 'The list is long, so the message contains a shortened version. Save the list as a PDF and attach it to your message.',
+      send_help: 'These buttons open a ready message for you to send. Nothing is sent until you press Send in WhatsApp or your email app.',
+      sent_wa: 'WhatsApp has opened with your request. Press Send there to complete it.',
+      sent_mail: 'Your email app has opened with your request. Press Send there to complete it.',
+      copy_req: 'Copy request text', copy_req_ok: 'Request text copied.', copy_req_fail: 'Could not copy automatically. Try the WhatsApp or email button.',
+      bar_review: function (n) { return 'Quotation list (' + n + ') — Review'; },
       e_clinic: 'Please enter the clinic or organisation name.', e_contact: "Please enter the contact person's name.",
       e_phone: 'Please enter a valid phone number so we can reach you.', e_email: 'The email address looks incomplete.',
       e_items: 'Select at least one item from the catalogue before sending.',
@@ -141,7 +148,7 @@ function nawaBoot(PRE) {
       msg_items: 'Requested items (code — name — monthly quantity): ', msg_of: function (a, b) { return a + ' of ' + b; },
       msg_short: 'The list has been shortened here. The full list is in the attached PDF.',
       mail_subj: 'Quotation request — ', mail_clinic: 'Clinic',
-      pr_title: 'Quotation request form', pr_items: 'Requested products', pr_notes: 'Additional requirements',
+      pr_title: 'Quotation request form', pr_items: 'Quotation list', pr_notes: 'Additional requirements',
       pr_unit: function (u) { return 'Quantity: ' + u; },
       pr_f1: 'NAWA | Nawat Al Takwin LLC · Saudi limited liability company · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'CR National No. 7053936733 · VAT No. 314703130800003 · Al Arid, Riyadh 13338, Saudi Arabia',
@@ -152,54 +159,61 @@ function nawaBoot(PRE) {
     },
     ar: {
       title: 'نواة — كتالوج العيادات',
-      meta_desc: 'كتالوج نواة للعيادات: الفحوص الجينية، فحوص المختبر العام، ومستلزمات أطفال الأنابيب. اختر ما يناسب عيادتك واطلب عرض سعر مخصّصًا.',
+      meta_desc: 'كتالوج نواة للعيادات: الفحوص الجينية، فحوص المختبر العام، ومستلزمات أطفال الأنابيب. اختاروا ما يناسب عيادتكم واطلبوا عرض سعر مخصّصًا.',
       brand: 'نواة', menu: 'القائمة', nav_label: 'التنقل الرئيسي',
       nav_catalog: 'الكتالوج', nav_how: 'كيف نعمل', nav_services: 'خدماتنا للعيادات', nav_quote: 'طلب عرض سعر',
       cart: 'قائمة الطلب', lang_btn: 'English', lang_btn_lang: 'en', lang_aria: 'Switch to English',
-      eyebrow: 'شراكات العيادات', hero_h1: 'شريك مختبري واحد لعيادتك',
-      hero_lead: 'نواة توفّر لعيادتك الفحوص الجينية، وفحوص المختبر العام، ومستلزمات أطفال الأنابيب — اختر ما يناسبك ونرسل لك عرض سعر مخصّص.',
+      eyebrow: 'شراكات العيادات', hero_h1: 'شريك مختبري واحد لعيادتكم',
+      hero_lead: 'نواة توفّر لعيادتكم الفحوص الجينية، وفحوص المختبر العام، ومستلزمات أطفال الأنابيب — اختاروا ما يناسبكم ونرسل لكم عرض سعر مخصّص.',
       hero_browse: 'تصفّح الكتالوج',
-      figs_aria: 'أرقام الكتالوج', fig_items: 'بند في الكتالوج', fig_catalogs: 'كتالوجات', fig_cats: 'تصنيفًا',
-      svc_title: 'خدماتنا للعيادات', svc_sub: 'خمس خدمات تدعم عيادتك من التسعير حتى المتابعة السريرية.',
-      svc1_t: 'تسعير الفحوص', svc1_d: 'عرض سعر واضح ومخصّص لعيادتك بحسب الفحوص التي تختارها.',
-      svc2_t: 'سحب العينات', svc2_d: 'ترتيب سحب العينات بما يناسب سير العمل في عيادتك.',
-      svc3_t: 'نقل العينات', svc3_d: 'تنسيق نقل العينات إلى المختبر بعناية ومتابعة مستمرة.',
-      svc4_t: 'تدريب الكادر', svc4_d: 'تعريف فريق العيادة بآلية الطلب والتعامل مع العينات.',
+      figs_aria: 'أرقام الكتالوج', fig_items: 'بند في الكتالوج',
+      price_note: 'الأسعار تصلكم ضمن عرض السعر المخصّص لعيادتكم.',
+      svc_title: 'خدماتنا للعيادات', svc_sub: 'خمس خدمات تدعم عيادتكم، من تسعير الفحوص حتى الدعم السريري.',
+      svc1_t: 'تسعير الفحوص', svc1_d: 'عرض سعر واضح ومخصّص لعيادتكم بحسب الفحوص التي تختارونها.',
+      svc2_t: 'سحب العينات', svc2_d: 'ترتيب سحب العينات بما يناسب سير العمل في عيادتكم.',
+      svc3_t: 'نقل العينات', svc3_d: 'تنسيق نقل العينات إلى المختبر.',
+      svc4_t: 'تدريب الكادر', svc4_d: 'تعريف فريق عيادتكم بآلية الطلب والتعامل مع العينات.',
       svc5_t: 'الدعم السريري', svc5_d: 'فريق جاهز للإجابة عن استفساراتكم حول الفحوص.',
       how_title: 'كيف نعمل',
-      step1_t: 'اختر', step1_p: 'اختر الفحوص أو المستلزمات من الكتالوج.',
-      step2_t: 'حدّد', step2_p: 'حدّد الكمية الشهرية المتوقعة لكل بند.',
-      step3_t: 'أرسل', step3_p: 'أرسل الطلب، ويصلك عرض سعر مخصّص لعيادتك.',
-      cat_title: 'الكتالوج', tabs_aria: 'الكتالوجات', search_label: 'ابحث في الكتالوج',
-      search_ph: 'ابحث بالرمز أو اسم الفحص أو التصنيف', search_all: 'البحث في كل الكتالوجات', cats_aria: 'التصنيفات',
+      step1_t: 'اختاروا', step1_p: 'اختاروا الفحوص أو المستلزمات من الكتالوج.',
+      step2_t: 'حدّدوا', step2_p: 'حدّدوا الكمية الشهرية المتوقعة لكل بند.',
+      step3_t: 'أرسلوا', step3_p: 'أرسلوا الطلب، ويصلكم عرض سعر مخصّص لعيادتكم.',
+      cat_title: 'الكتالوج', tabs_aria: 'الكتالوجات', search_label: 'ابحثوا في الكتالوج',
+      search_ph: 'ابحثوا بالرمز أو اسم الفحص أو التصنيف', search_all: 'البحث في كل الكتالوجات', cats_aria: 'التصنيفات',
       all: 'الكل', add: 'إضافة', added: 'مُضاف', add_cat: 'إضافة كل التصنيف', rm_cat: 'إزالة كل التصنيف',
       n_items: function (n) { return n + ' بند'; },
       res_q: function (n) { return 'عدد النتائج: ' + n; },
       res_all: function (n) { return 'عدد البنود المعروضة: ' + n; },
-      empty: function (all) { return 'لا توجد نتائج مطابقة. جرّب كلمة أخرى' + (all ? '.' : '، أو فعّل البحث في كل الكتالوجات.'); },
+      empty: function (all) { return 'لا توجد نتائج مطابقة. جرّبوا كلمة أخرى' + (all ? '.' : '، أو فعّلوا البحث في كل الكتالوجات.'); },
       quote_title: 'طلب عرض سعر',
-      quote_sub: 'راجع القائمة، حدّد الكميات، وأكمل بيانات العيادة.',
-      sel_head: 'البنود المختارة', copy_link: 'نسخ رابط القائمة', clear_all: 'مسح القائمة',
-      clear_confirm: 'هل تريد مسح كل البنود من القائمة؟',
-      sel_empty: 'لم تختر أي بند بعد. ', sel_back: 'العودة إلى الكتالوج',
+      quote_sub: 'راجعوا القائمة، وحدّدوا الكميات، وأكملوا بيانات العيادة.',
+      qty_hint: 'أضيفوا الكميات الشهرية قدر الإمكان، فهذا يساعدنا على تسعير أدق.', qty_ph: 'الكمية', qty_none: 'الكمية غير محددة',
+      sel_head: 'قائمة الطلب', copy_link: 'نسخ رابط القائمة', clear_all: 'مسح القائمة',
+      clear_confirm: 'هل تريدون مسح كل البنود من القائمة؟',
+      sel_empty: 'لم تختاروا أي بند بعد. ', sel_back: 'العودة إلى الكتالوج',
       qty_unit: function (u) { return 'الكمية: ' + u; },
       th_code: 'الرمز', th_name: 'الاسم', th_qty: function () { return 'الكمية الشهرية'; }, th_rm: 'إزالة',
       qty_aria: function (k) { return 'الكمية ' + k; }, rm_aria: function (k) { return 'إزالة ' + k; },
       form_head: 'بيانات العيادة',
       f_clinic: 'اسم العيادة / الجهة', f_city: 'المدينة', f_dept: 'القسم / التخصص', f_contact: 'اسم المسؤول',
-      f_title: 'المسمى الوظيفي', f_email: 'البريد الإلكتروني', f_phone: 'الجوال / واتساب', f_start: 'تاريخ البدء المتوقع',
+      f_title: 'المسمى الوظيفي', f_email: 'البريد الإلكتروني', f_phone: 'الجوال / واتساب', f_start: 'تاريخ البدء المتوقع / الإطار الزمني',
       f_total: 'إجمالي الفحوص الشهرية المتوقع',
       req_head: 'متطلبات الشراكة',
       req_pricing: 'تسعير الفحوص', req_collection: 'سحب العينات', req_logistics: 'نقل العينات',
       req_orientation: 'تدريب الكادر', req_support: 'الدعم السريري', req_other: 'أخرى',
       f_notes: 'ملاحظات إضافية',
       send_wa: 'إرسال عبر واتساب', send_mail: 'إرسال بالبريد', print: 'حفظ PDF / طباعة',
-      mail_note: 'القائمة طويلة، فاختصرنا البنود في رسالة البريد. احفظ القائمة كملف PDF وأرفقها بالرسالة.',
+      long_note: 'القائمة طويلة، فاختصرنا البنود في الرسالة. احفظوا القائمة كملف PDF وأرفقوها بالرسالة.',
+      send_help: 'الأزرار أعلاه تفتح رسالة جاهزة لترسلوها بأنفسكم. لا يُرسل شيء قبل أن تضغطوا إرسال في واتساب أو تطبيق البريد.',
+      sent_wa: 'فُتحت رسالة واتساب بطلبكم. اضغطوا إرسال فيها لإتمام الطلب.',
+      sent_mail: 'فُتحت رسالة بريد بطلبكم. اضغطوا إرسال فيها لإتمام الطلب.',
+      copy_req: 'نسخ نص الطلب', copy_req_ok: 'تم نسخ نص الطلب.', copy_req_fail: 'تعذّر النسخ تلقائيًا. جرّبوا زر واتساب أو البريد.',
+      bar_review: function (n) { return 'قائمة الطلب (' + n + ') — مراجعة'; },
       e_clinic: 'نحتاج اسم العيادة أو الجهة.', e_contact: 'نحتاج اسم المسؤول عن الطلب.',
       e_phone: 'نحتاج رقم جوال صحيحًا للتواصل.', e_email: 'يبدو أن البريد الإلكتروني غير مكتمل.',
-      e_items: 'اختر بندًا واحدًا على الأقل من الكتالوج قبل الإرسال.',
-      m_empty: 'أضف بندًا واحدًا على الأقل لنسخ الرابط.', m_ok: 'تم نسخ الرابط.',
-      m_fail: 'تعذّر النسخ تلقائيًا. انسخ الرابط من شريط العنوان.',
+      e_items: 'اختاروا بندًا واحدًا على الأقل من الكتالوج قبل الإرسال.',
+      m_empty: 'أضيفوا بندًا واحدًا على الأقل لنسخ الرابط.', m_ok: 'تم نسخ الرابط.',
+      m_fail: 'تعذّر النسخ تلقائيًا. انسخوا الرابط من شريط العنوان.',
       foot_l1: 'نواة التكوين — شركة ذات مسؤولية محدودة', foot_l2: '',
       foot_l3: 'السجل التجاري <span class="num-t">7053936733</span> · الرقم الضريبي <span class="num-t">314703130800003</span>',
       foot_phone: 'جوال / واتساب', foot_wa: 'واتساب', foot_email: 'البريد الإلكتروني', foot_site: 'الموقع', foot_addr_l: 'العنوان',
@@ -212,7 +226,7 @@ function nawaBoot(PRE) {
       msg_items: 'البنود المطلوبة (الرمز — الاسم — الكمية الشهرية): ', msg_of: function (a, b) { return a + ' من ' + b; },
       msg_short: 'تم اختصار القائمة هنا. القائمة الكاملة في ملف PDF المرفق.',
       mail_subj: 'طلب عرض سعر — ', mail_clinic: 'عيادة',
-      pr_title: 'نموذج طلب عرض سعر', pr_items: 'البنود المطلوبة', pr_notes: 'ملاحظات إضافية',
+      pr_title: 'نموذج طلب عرض سعر', pr_items: 'قائمة الطلب', pr_notes: 'ملاحظات إضافية',
       pr_unit: function (u) { return 'الكمية: ' + u; },
       pr_f1: 'نواة التكوين — شركة ذات مسؤولية محدودة · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'السجل التجاري 7053936733 · الرقم الضريبي 314703130800003 · العارض، الرياض 13338، المملكة العربية السعودية',
@@ -291,7 +305,7 @@ function nawaBoot(PRE) {
   function applyConfig() {
     if (!CFG) return;
     var fc = $('#f_clinic');
-    fc.value = CFG.n; fc.readOnly = true; fc.classList.add('locked');
+    fc.value = dispName(); fc.readOnly = true; fc.classList.add('locked');
     var ci = $('#f_city'), de = $('#f_dept');
     if (CFG.ci && !ci.value) ci.value = CFG.ci;
     if (CFG.d && !de.value) de.value = CFG.d;
@@ -310,9 +324,11 @@ function nawaBoot(PRE) {
       e.preventDefault(); t.scrollIntoView();
     });
   }
+  function dispName() { return CFG ? (lang === 'en' && CFG.ne ? CFG.ne : CFG.n) : ''; }
   function applyChip() {
     if (!CFG) return;
-    var n = esc(CFG.n);
+    var fc = $('#f_clinic'); if (fc && fc.readOnly) fc.value = dispName();
+    var n = esc(dispName());
     var ey = $('.eyebrow');
     ey.innerHTML = lang === 'ar' ? 'مُعدّ خصيصًا لـ <bdi>' + n + '</bdi>' : 'PREPARED FOR <bdi>' + n + '</bdi>';
     ey.classList.add('for');
@@ -320,9 +336,9 @@ function nawaBoot(PRE) {
 
   /* ---------- hero figures (from data) ---------- */
   function renderFigures() {
-    var total = 0, cats = 0;
-    catalogs.forEach(function (c) { total += c.count; cats += c.cats.length; });
-    var data = [[total, T('fig_items')], [catalogs.length, T('fig_catalogs')], [cats, T('fig_cats')]];
+    var total = 0;
+    catalogs.forEach(function (c) { total += c.count; });
+    var data = [[total, T('fig_items')]];
     $('#figures').innerHTML = data.map(function (d) {
       return '<div class="figure"><b>' + d[0] + '</b><span>' + d[1] + '</span></div>';
     }).join('');
@@ -413,12 +429,12 @@ function nawaBoot(PRE) {
     if (add) {
       var codes = add.getAttribute('data-codes').split(',');
       var all = codes.every(function (c) { return sel[c] != null; });
-      codes.forEach(function (c) { if (all) delete sel[c]; else if (sel[c] == null) sel[c] = 1; });
+      codes.forEach(function (c) { if (all) delete sel[c]; else if (sel[c] == null) sel[c] = 0; });
       refreshRows(); onSelChange(); return;
     }
     var row = e.target.closest('.row'); if (!row) return;
     var code = row.getAttribute('data-code');
-    if (sel[code] != null) delete sel[code]; else sel[code] = 1;
+    if (sel[code] != null) delete sel[code]; else sel[code] = 0;
     refreshRow(row); refreshAddAll(); onSelChange();
   });
   $('#cats').addEventListener('click', function (e) {
@@ -436,12 +452,14 @@ function nawaBoot(PRE) {
   $('#allCats').addEventListener('change', function (e) { searchAll = e.target.checked; renderCatalog(); });
 
   /* ---------- selection / quote ---------- */
+  function qtyOf(k) { var n = parseInt(sel[k], 10); return isNaN(n) || n < 0 ? 0 : n; }
   function selCodes() { return Object.keys(sel).filter(function (c) { return ITEMS[c]; }); }
 
   function renderSelected() {
     var codes = selCodes();
     $('#cartBadge').textContent = codes.length;
     $('#selCount').textContent = codes.length;
+    updateBar();
     var host = $('#selected');
     if (!codes.length) {
       host.innerHTML = '<div class="empty">' + esc(T('sel_empty')) + '<a href="#catalog">' + esc(T('sel_back')) + '</a></div>';
@@ -453,9 +471,9 @@ function nawaBoot(PRE) {
       return '<div class="sel-group"><h4>' + esc(cName(c)) + ' <small>' + esc(T('qty_unit', cUnit(c))) + '</small></h4><div class="tbl-wrap"><table><thead><tr><th>' + T('th_code') + '</th><th>' + T('th_name') + '</th><th>' + esc(T('th_qty', cUnit(c))) + '</th><th><span class="sr">' + T('th_rm') + '</span></th></tr></thead><tbody>' +
         rows.map(function (k) {
           var it = ITEMS[k];
-          return '<tr data-code="' + k + '"><td><span class="code">' + esc(k) + '</span></td><td class="nm">' + esc(it.name) + '</td>' +
-            '<td><label class="sr" for="q_' + k + '">' + esc(T('qty_aria', k)) + '</label><input class="qty" id="q_' + k + '" type="number" min="0" step="1" inputmode="numeric" value="' + (sel[k] == null ? 1 : sel[k]) + '"></td>' +
-            '<td><button type="button" class="rm" aria-label="' + esc(T('rm_aria', k)) + '">' + ICON_X + '</button></td></tr>';
+          return '<tr data-code="' + k + '"><td class="cc"><span class="code">' + esc(k) + '</span></td><td class="nm"><span dir="ltr">' + esc(it.name) + '</span></td>' +
+            '<td class="qc"><label class="sr" for="q_' + k + '">' + esc(T('qty_aria', k)) + '</label><input class="qty" id="q_' + k + '" type="number" min="0" step="1" inputmode="numeric" placeholder="' + esc(T('qty_ph')) + '" value="' + (qtyOf(k) ? qtyOf(k) : '') + '"></td>' +
+            '<td class="rc"><button type="button" class="rm" aria-label="' + esc(T('rm_aria', k)) + '">' + ICON_X + '<span class="rm-t">' + esc(T('th_rm')) + '</span></button></td></tr>';
         }).join('') + '</tbody></table></div></div>';
     }).join('');
   }
@@ -479,6 +497,27 @@ function nawaBoot(PRE) {
 
   function onSelChange() { renderSelected(); renderPrint(); save(); errKeys.items = ''; $('#e_items').textContent = ''; }
 
+  /* ---------- sticky review bar (mobile) ---------- */
+  var barSeen = false, quoteIn = false;
+  function updateBar() {
+    var bar = $('#stickyBar'); if (!bar) return;
+    var n = selCodes().length;
+    bar.textContent = T('bar_review', n);
+    var show = (barSeen || n > 0) && !quoteIn;
+    bar.hidden = !show;
+    document.documentElement.classList.toggle('has-bar', show);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.target.id === 'quote') quoteIn = e.isIntersecting;
+        else if (e.isIntersecting) barSeen = true;
+      });
+      updateBar();
+    }, { threshold: 0.05 });
+    io.observe($('#catalog')); io.observe($('#quote'));
+  } else { barSeen = true; }
+
   /* ---------- form + messages ---------- */
   function val(id) { return ($('#' + id).value || '').trim(); }
   function data() {
@@ -494,7 +533,7 @@ function nawaBoot(PRE) {
     return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
   }
   function lines(codes) {
-    return codes.map(function (k) { return k + ' — ' + ITEMS[k].name + ' — ' + (sel[k] == null ? 1 : sel[k]); });
+    return codes.map(function (k) { return k + ' — ' + ITEMS[k].name + ' — ' + (qtyOf(k) || T('qty_none')); });
   }
   function head(d, count, total) {
     var L = [T('msg_title'), T('msg_date') + today()];
@@ -509,11 +548,30 @@ function nawaBoot(PRE) {
     return L;
   }
   function buildMessage(d, codes) { return head(d, codes.length, codes.length).concat(lines(codes)).join('\n'); }
-  function mailUrl(d, codes, n) {
+  function msgText(d, codes, n) {
     var shown = codes.slice(0, n);
     var L = head(d, shown.length, codes.length).concat(lines(shown));
     if (n < codes.length) L.push('', T('msg_short'));
-    return 'mailto:' + MAIL + '?subject=' + encodeURIComponent(T('mail_subj') + (d.clinic || T('mail_clinic')) + (CFG && CFG.r ? ' (' + CFG.r + ')' : '')) + '&body=' + encodeURIComponent(L.join('\n'));
+    return L.join('\n');
+  }
+  function mailUrl(d, codes, n) {
+    return 'mailto:' + MAIL + '?subject=' + encodeURIComponent(T('mail_subj') + (d.clinic || T('mail_clinic')) + (CFG && CFG.r ? ' (' + CFG.r + ')' : '')) + '&body=' + encodeURIComponent(msgText(d, codes, n));
+  }
+  function waUrl(d, codes, n) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msgText(d, codes, n)); }
+  function fitUrl(build, d, codes, MAX) {
+    var n = codes.length;
+    if (build(d, codes, n).length > MAX) {
+      var lo = 0, hi = n - 1;
+      while (lo < hi) { var mid = Math.ceil((lo + hi) / 2); if (build(d, codes, mid).length <= MAX) lo = mid; else hi = mid - 1; }
+      n = lo;
+    }
+    return { n: n, url: build(d, codes, n) };
+  }
+  var sentKey = '';
+  function showSent(key, shortened) {
+    sentKey = key;
+    var el = $('#sentNote'); el.textContent = T(key); el.hidden = false;
+    $('#longNote').hidden = !shortened;
   }
 
   function validate() {
@@ -537,18 +595,22 @@ function nawaBoot(PRE) {
 
   $('#sendWa').addEventListener('click', function () {
     var v = validate(); if (!v) return;
-    window.open('https://wa.me/' + WA + '?text=' + encodeURIComponent(buildMessage(v.d, v.codes)), '_blank', 'noopener');
+    var r = fitUrl(waUrl, v.d, v.codes, 4000);
+    window.open(r.url, '_blank', 'noopener');
+    showSent('sent_wa', r.n < v.codes.length);
   });
   $('#sendMail').addEventListener('click', function () {
     var v = validate(); if (!v) return;
-    var n = v.codes.length, MAX = 1800, url = mailUrl(v.d, v.codes, n);
-    if (url.length > MAX) {
-      var lo = 0, hi = n - 1;
-      while (lo < hi) { var mid = Math.ceil((lo + hi) / 2); if (mailUrl(v.d, v.codes, mid).length <= MAX) lo = mid; else hi = mid - 1; }
-      n = lo; url = mailUrl(v.d, v.codes, n);
-    }
-    $('#mailNote').hidden = n >= v.codes.length;
-    window.location.href = url;
+    var r = fitUrl(mailUrl, v.d, v.codes, 1800);
+    showSent('sent_mail', r.n < v.codes.length);
+    window.location.href = r.url;
+  });
+  var copyReqKey = '';
+  $('#copyReq').addEventListener('click', function () {
+    var v = validate(); if (!v) return;
+    copyText(msgText(v.d, v.codes, v.codes.length)).then(function (ok) {
+      copyReqKey = ok ? 'copy_req_ok' : 'copy_req_fail'; $('#copyReqMsg').textContent = T(copyReqKey);
+    });
   });
   $('#printBtn').addEventListener('click', function () {
     var v = validate(); if (!v) return;
@@ -564,14 +626,14 @@ function nawaBoot(PRE) {
       if (CFG.k.length) o.k = CFG.k;
       if (CFG.l) o.l = CFG.l;
       if (CFG.r) o.r = CFG.r;
-      selCodes().forEach(function (k) { o.s[k] = sel[k] == null ? 1 : sel[k]; });
+      selCodes().forEach(function (k) { o.s[k] = qtyOf(k); });
       if (CFG.code) {
-        var ps = selCodes().map(function (k) { return k + ':' + (sel[k] == null ? 1 : sel[k]); });
+        var ps = selCodes().map(function (k) { return k + ':' + qtyOf(k); });
         return location.href.split('#')[0].split('?')[0] + '?' + CFG.code + (ps.length ? '#sel=' + ps.join(',') : '');
       }
       return location.href.split('#')[0] + '#c=' + b64uEncode(JSON.stringify(o));
     }
-    var parts = selCodes().map(function (k) { return k + ':' + (sel[k] == null ? 1 : sel[k]); });
+    var parts = selCodes().map(function (k) { return k + ':' + qtyOf(k); });
     return location.href.split('#')[0] + '#sel=' + parts.join(',');
   }
   function copyText(t) {
@@ -599,7 +661,7 @@ function nawaBoot(PRE) {
       var a = p.split(':'), code = (a[0] || '').trim().toUpperCase();
       if (!ITEMS[code]) return;
       var n = parseInt(toLatin(a[1]), 10);
-      sel[code] = isNaN(n) || n < 0 ? 1 : n; any = true;
+      sel[code] = isNaN(n) || n < 0 ? 0 : n; any = true;
     });
     return any;
   }
@@ -619,7 +681,7 @@ function nawaBoot(PRE) {
       var rs = codes.filter(function (k) { return ITEMS[k].catalog === c; });
       if (!rs.length) return;
       h += '<p class="gh">' + esc(cName(c)) + ' — ' + esc(T('pr_unit', cUnit(c))) + '</p><table><thead><tr><th>' + T('th_code') + '</th><th>' + T('th_name') + '</th><th>' + esc(T('th_qty', cUnit(c))) + '</th></tr></thead><tbody>' +
-        rs.map(function (k) { return '<tr><td class="l">' + esc(k) + '</td><td class="l">' + esc(ITEMS[k].name) + '</td><td class="q">' + (sel[k] == null ? 1 : sel[k]) + '</td></tr>'; }).join('') + '</tbody></table>';
+        rs.map(function (k) { return '<tr><td class="l">' + esc(k) + '</td><td class="l">' + esc(ITEMS[k].name) + '</td><td class="q">' + (qtyOf(k) || esc(T('qty_none'))) + '</td></tr>'; }).join('') + '</tbody></table>';
     });
     h += '<div class="pf">' + T('pr_f1') + '<br>' + T('pr_f2') + '</div>';
     $('#printDoc').innerHTML = h;
@@ -657,6 +719,9 @@ function nawaBoot(PRE) {
     applyChip();
     errKeys && Object.keys(errKeys).forEach(function (id) { var e = $('#e_' + id); if (e) e.textContent = errKeys[id] ? T(errKeys[id]) : ''; });
     if (copyKey) $('#copyMsg').textContent = T(copyKey);
+    if (copyReqKey) $('#copyReqMsg').textContent = T(copyReqKey);
+    if (sentKey) $('#sentNote').textContent = T(sentKey);
+    updateBar();
   }
   function renderAll() {
     var root = document.documentElement;
@@ -689,14 +754,20 @@ function nawaBoot(PRE) {
 
 
   /* ---------- opening intro (personalised links only) ---------- */
+  var GENERIC = /^(مجمع|عيادة|عيادات|مستشفى|مركز|مستوصف|clinic|clinics|hospital|center|centre|medical|polyclinic|complex)$/i;
   function initials(name) {
-    var w = String(name).split(/\s+/).map(function (x) { return Array.from(x.replace(/^[^\p{L}\p{N}]+/u, '').replace(/^ال(?=[\u0600-\u06FF]{2})/, ''))[0]; }).filter(Boolean).slice(0, 2);
+    var all = String(name).split(/\s+/).map(function (x) {
+      var t = x.replace(/^[^\p{L}\p{N}]+/u, '').replace(/[^\p{L}\p{N}]+$/u, '');
+      return t.replace(/^ال(?=[\u0600-\u06FF]{2})/, '');
+    }).filter(Boolean);
+    var keep = all.filter(function (x) { return !GENERIC.test(x); });
+    var w = (keep.length ? keep : all).slice(0, 2).map(function (x) { return Array.from(x)[0]; });
     var isAr = /[\u0600-\u06FF]/.test(w.join(''));
     return { text: isAr ? w.join(' ') : w.join('').toUpperCase(), ar: isAr };
   }
   function showIntro() {
     if (!CFG) return;
-    var ini = initials(CFG.n), prev = document.activeElement, done = false, ov = document.createElement('div');
+    var ini = initials(dispName()), prev = document.activeElement, done = false, ov = document.createElement('div');
     ov.className = 'intro'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', T('intro_label'));
     ov.innerHTML =
       '<svg class="intro-grain" aria-hidden="true" focusable="false"><filter id="introGrain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="ur' + 'l(#introGrain)"/></svg>' +
@@ -708,7 +779,7 @@ function nawaBoot(PRE) {
           '<div class="ib ib-partner" id="ibPartner"></div>' +
         '</div>' +
         '<p class="intro-eyebrow rise d4">' + esc(T('intro_welcome')) + '</p>' +
-        '<h2 class="intro-name rise d5"><bdi>' + esc(CFG.n) + '</bdi></h2>' +
+        '<h2 class="intro-name rise d5"><bdi>' + esc(dispName()) + '</bdi></h2>' +
         '<p class="intro-line rise d6">' + esc(T('intro_ready')) + '</p>' +
         '<div class="intro-bar rise d7" aria-hidden="true"><i></i></div>' +
         '<button type="button" class="intro-enter rise d8">' + esc(T('intro_enter')) + '</button>' +
