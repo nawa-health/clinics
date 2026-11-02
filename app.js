@@ -602,7 +602,7 @@
     var rows = [[T('f_clinic'), d.clinic], [T('f_city'), d.city], [T('f_dept'), d.dept], [T('f_contact'), d.contact],
       [T('f_title'), d.title], [T('f_email'), d.email], [T('f_phone'), d.phone], [T('f_start'), d.start],
       [T('f_total'), d.total]].filter(function (r) { return r[1]; });
-    var h = '<div class="ph"><img src="assets/logo-wordmark.png" alt="' + esc(T('brand')) + '"><div><h1>' + T('pr_title') + '</h1></div><div class="dt">' + today() + (CFG && CFG.r ? '<br>' + esc(T('msg_ref', CFG.r)) : '') + '</div></div>';
+    var h = '<div class="ph"><img src="assets/logo-wordmark-dark.png" alt="' + esc(T('brand')) + '"><div><h1>' + T('pr_title') + '</h1></div><div class="dt">' + today() + (CFG && CFG.r ? '<br>' + esc(T('msg_ref', CFG.r)) : '') + '</div></div>';
     h += '<h2>' + T('form_head') + '</h2><div class="grid2">' + rows.map(function (r) { return '<div><span>' + r[0] + ':</span> ' + esc(r[1]) + '</div>'; }).join('') + '</div>';
     if (d.req.length) h += '<h2>' + T('req_head') + '</h2><p>' + esc(d.req.join(T('sep'))) + '</p>';
     if (d.notes) h += '<h2>' + T('pr_notes') + '</h2><p>' + esc(d.notes) + '</p>';
