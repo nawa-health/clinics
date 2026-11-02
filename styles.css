@@ -89,8 +89,6 @@ h1,h2,h3{text-wrap:balance}
 .btn:hover{text-decoration:none}
 .btn-white{background:#fff;color:var(--navy)}
 .btn-white:hover{background:var(--teal-50)}
-.btn-outline-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
-.btn-outline-white:hover{background:rgba(255,255,255,.12)}
 .btn-primary{background:var(--teal-700);color:#fff}
 .btn-primary:hover{background:var(--teal-600)}
 .glow{box-shadow:0 10px 30px rgba(48,172,173,.28)}
