@@ -146,7 +146,7 @@ function nawaBoot(PRE) {
       pr_f1: 'NAWA | Nawat Al Takwin LLC · Saudi limited liability company · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'CR National No. 7053936733 · VAT No. 314703130800003 · Al Arid, Riyadh 13338, Saudi Arabia',
       eyebrow_for: function (n) { return 'PREPARED FOR ' + n; },
-      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome', intro_ready: 'Your NAWA clinic catalogue is ready', intro_enter: 'Next',
+      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome, our future partner', intro_ready: 'The NAWA catalogue, prepared for you', intro_hope: 'We look forward to a partnership that serves your patients', intro_enter: 'Next',
       f_locked: 'Set for your clinic', msg_ref: function (r) { return 'Reference: ' + r; },
       desc: 'desc_en', unit: 'unit_en'
     },
@@ -217,7 +217,7 @@ function nawaBoot(PRE) {
       pr_f1: 'نواة التكوين — شركة ذات مسؤولية محدودة · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'السجل التجاري 7053936733 · الرقم الضريبي 314703130800003 · العارض، الرياض 13338، المملكة العربية السعودية',
       eyebrow_for: function (n) { return 'مُعدّ خصيصًا لـ ' + n; },
-      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بكم', intro_ready: 'كتالوج نواة المُعدّ لكم جاهز', intro_enter: 'التالي',
+      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بشريكنا المستقبلي', intro_ready: 'كتالوج نواة المُعدّ لكم', intro_hope: 'نتطلّع لشراكة تخدم مرضاكم', intro_enter: 'التالي',
       f_locked: 'محدّد لعيادتكم', msg_ref: function (r) { return 'المرجع: ' + r; },
       desc: 'desc', unit: 'unit'
     }
@@ -700,17 +700,19 @@ function nawaBoot(PRE) {
     ov.className = 'intro'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', T('intro_label'));
     ov.innerHTML =
       '<svg class="intro-grain" aria-hidden="true" focusable="false"><filter id="introGrain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="ur' + 'l(#introGrain)"/></svg>' +
+      '<i class="intro-glow g1" aria-hidden="true"></i><i class="intro-glow g2" aria-hidden="true"></i>' +
       '<div class="intro-in">' +
         '<div class="intro-badges">' +
-          '<div class="ib ib-nawa rise d1"><img src="assets/logo-mark-white.png" alt=""></div>' +
-          '<span class="ib-sep rise d3" aria-hidden="true"></span>' +
-          '<div class="ib ib-partner rise d2" id="ibPartner"></div>' +
+          '<div class="ib ib-nawa"><img src="assets/logo-mark.png" alt=""></div>' +
+          '<span class="ib-sep" aria-hidden="true"></span>' +
+          '<div class="ib ib-partner" id="ibPartner"></div>' +
         '</div>' +
         '<p class="intro-eyebrow rise d4">' + esc(T('intro_welcome')) + '</p>' +
-        '<h2 class="intro-name rise d4"><bdi>' + esc(CFG.n) + '</bdi></h2>' +
-        '<p class="intro-line rise d5">' + esc(T('intro_ready')) + '</p>' +
-        '<div class="intro-bar rise d6" aria-hidden="true"><i></i></div>' +
-        '<button type="button" class="intro-enter rise d7">' + esc(T('intro_enter')) + '</button>' +
+        '<h2 class="intro-name rise d5"><bdi>' + esc(CFG.n) + '</bdi></h2>' +
+        '<p class="intro-line rise d6">' + esc(T('intro_ready')) + '</p>' +
+        '<p class="intro-hope rise d7">' + esc(T('intro_hope')) + '</p>' +
+        '<div class="intro-bar" aria-hidden="true"><i></i></div>' +
+        '<button type="button" class="intro-enter rise d9">' + esc(T('intro_enter')) + '</button>' +
       '</div>';
     var pb = ov.querySelector('#ibPartner');
     function mono() {
@@ -730,9 +732,11 @@ function nawaBoot(PRE) {
       if (done) return; done = true;
       document.removeEventListener('keydown', onKey, true);
       ov.classList.add('out');
+      document.documentElement.classList.add('intro-handoff');
+      setTimeout(function () { document.documentElement.classList.remove('intro-handoff'); }, 1200);
       document.documentElement.classList.remove('intro-lock');
       try { if (prev && prev.focus && document.contains(prev)) prev.focus({ preventScroll: true }); } catch (e) { }
-      setTimeout(function () { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 450);
+      setTimeout(function () { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 750);
     }
     function onKey(e) {
       if (e.key === 'Escape') { e.preventDefault(); close(); }

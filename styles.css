@@ -281,37 +281,67 @@ input.bad,textarea.bad{border-color:#c25a45}
 /* opening intro (personalised links only) */
 html.intro-pre::before{content:"";position:fixed;inset:0;z-index:999;background:#f6f7f9}
 html.intro-lock,html.intro-lock body{overflow:hidden}
-.intro{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(ellipse 60% 55% at 50% 46%,#fff 0%,#eef0f3 100%),#f6f7f9;color:#1D3253;transition:opacity .4s var(--ease)}
+.intro{--ie:cubic-bezier(.16,1,.3,1);--gap:clamp(16px,4vw,28px);--slide:34px;position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;background:radial-gradient(ellipse 60% 55% at 50% 46%,#fff 0%,#eef0f3 100%),#f6f7f9;color:#1D3253;transition:opacity .5s ease .15s}
 .intro-grain{position:absolute;inset:0;width:100%;height:100%;opacity:.04;pointer-events:none}
+.intro-glow{position:absolute;width:70vmax;height:70vmax;border-radius:50%;pointer-events:none;will-change:transform}
+.intro-glow.g1{left:-25vmax;top:-30vmax;background:radial-gradient(circle,rgba(48,172,173,.10) 0%,rgba(48,172,173,0) 65%);animation:introDrift1 22s ease-in-out infinite alternate}
+.intro-glow.g2{right:-25vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(149,217,145,.10) 0%,rgba(149,217,145,0) 65%);animation:introDrift2 18s ease-in-out infinite alternate}
+@keyframes introDrift1{to{transform:translate3d(14vmax,10vmax,0)}}
+@keyframes introDrift2{to{transform:translate3d(-14vmax,-8vmax,0)}}
 .intro.out{opacity:0;pointer-events:none}
 .intro :where(button):focus-visible{outline:none;box-shadow:0 0 0 3px rgba(48,172,173,.55)}
-.intro-in{position:relative;width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;text-align:center}
-.intro-badges{display:flex;align-items:center;justify-content:center;gap:clamp(16px,4vw,28px);margin-bottom:36px}
-.ib{position:relative;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex:none}
-@media(min-width:480px){.ib{width:120px;height:120px}}
-.ib-nawa{border-radius:50%;background:#1D3253;box-shadow:0 8px 24px rgba(23,39,63,.18)}
-.ib-nawa img{width:46%;height:auto}
-.ib-partner{width:auto;height:auto;min-width:88px;min-height:88px}
-.ib-partner img{display:block;max-width:120px;max-height:88px;width:auto;height:auto;object-fit:contain}
-@media(min-width:480px){.ib-partner{min-width:0;min-height:120px}.ib-partner img{max-width:160px;max-height:120px}}
-.ib-partner:has(.ib-mono){width:88px;height:88px;min-height:0;border-radius:50%;border:1.5px solid #1D3253;background:transparent}
-@media(min-width:480px){.ib-partner:has(.ib-mono){width:120px;height:120px}}
-.ib-mono{font-weight:800;color:#1D3253;font-size:34px;line-height:1;letter-spacing:.02em;font-family:"Noto Sans Arabic",system-ui,sans-serif;white-space:nowrap}
-@media(min-width:480px){.ib-mono{font-size:44px}}
+.intro-in{position:relative;width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;text-align:center;transition:opacity .3s ease,transform .3s ease}
+.intro.out .intro-in{opacity:0;transform:translateY(-8px)}
+.intro-badges{display:flex;align-items:center;justify-content:center;gap:var(--gap);margin-bottom:36px}
+.ib{mix-blend-mode:multiply;position:relative;height:80px;min-width:60px;display:flex;align-items:center;justify-content:center;flex:none;opacity:0;animation:introGlideA 1s var(--ie) .05s forwards}
+.ib-partner{animation-name:introGlideB}
+@media(min-width:480px){.ib{height:110px;min-width:80px}.intro{--slide:46px}}
+.ib>*{animation:introBreath 6s ease-in-out 1.9s infinite alternate}
+.ib-nawa img{display:block;height:100%;width:auto}
+.ib-partner img{display:block;max-width:150px;max-height:80px;width:auto;height:auto;object-fit:contain}
+@media(min-width:480px){.ib-partner img{max-width:200px;max-height:110px}}
+.ib-partner:has(.ib-mono){width:80px;height:80px;border-radius:50%;border:1.5px solid #1D3253;background:transparent}
+@media(min-width:480px){.ib-partner:has(.ib-mono){width:110px;height:110px}}
+.ib-partner:has(.ib-mono)>*{animation:none}
+.ib-mono{font-weight:800;color:#1D3253;font-size:30px;line-height:1;letter-spacing:.02em;font-family:"Noto Sans Arabic",system-ui,sans-serif;white-space:nowrap}
+@media(min-width:480px){.ib-mono{font-size:42px}}
 .ib-mono.lat{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-.ib-sep{width:1px;height:40px;background:#C6CACE;flex:none}
+.ib-sep{width:1px;height:44px;background:#C6CACE;flex:none;transform:scaleY(0);transform-origin:center;animation:introSep .8s var(--ie) .3s forwards}
+@media(min-width:480px){.ib-sep{height:60px}}
+/* logos start overlapped at the centre (nawa = inline-start side), then glide apart */
+@keyframes introGlideA{from{opacity:0;transform:translate3d(var(--slide),0,0) scale(.96)}30%{opacity:.35}to{opacity:1;transform:none}}
+@keyframes introGlideB{from{opacity:0;transform:translate3d(calc(var(--slide) * -1),0,0) scale(.96)}30%{opacity:.35}to{opacity:1;transform:none}}
+html[dir="rtl"] .intro{--flip:1}
+html[dir="rtl"] .ib-nawa{animation-name:introGlideB}
+html[dir="rtl"] .ib-partner{animation-name:introGlideA}
+@keyframes introSep{to{transform:scaleY(1)}}
+@keyframes introBreath{from{transform:translate3d(0,-1px,0)}to{transform:translate3d(0,2px,0)}}
 .intro-eyebrow{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1f8a8b;line-height:1.5}
 html[lang="ar"] .intro-eyebrow{letter-spacing:0;font-size:15px;text-transform:none}
 .intro-name{font-size:clamp(28px,6.4vw,48px);font-weight:800;color:#1D3253;line-height:1.25;margin:10px 0 12px;overflow-wrap:anywhere;max-width:100%}
 .intro-line{font-size:16px;color:#5a606b;line-height:1.6}
-.intro-bar{width:48px;height:3px;border-radius:999px;background:rgba(29,50,83,.12);overflow:hidden;margin:28px 0 24px}
-.intro-bar i{display:block;width:100%;height:100%;border-radius:999px;background:linear-gradient(150deg,#30ACAD,#54B3A9,#95D991)}
+.intro-hope{font-size:13.5px;color:#8a909b;line-height:1.6;margin-top:4px}
+.intro-bar{width:64px;height:3px;border-radius:999px;margin:28px 0 24px;overflow:hidden}
+.intro-bar i{display:block;width:100%;height:100%;border-radius:999px;background:linear-gradient(150deg,#30ACAD,#54B3A9,#95D991);transform:scaleX(0);transform-origin:left center;animation:introBar .8s var(--ie) 1.15s forwards}
+html[dir="rtl"] .intro-bar i{transform-origin:right center}
+@keyframes introBar{to{transform:scaleX(1)}}
 .intro-enter{font-family:inherit;font-size:16px;font-weight:700;line-height:1.4;color:#fff;background:#1D3253;border:1px solid #1D3253;border-radius:12px;padding:10px 32px;min-height:44px;cursor:pointer;transition:background-color .2s var(--ease),border-color .2s var(--ease)}
 .intro-enter:hover{background:#17273f;border-color:#17273f}
-.intro .rise{opacity:0;transform:translateY(4px);animation:introRise .24s var(--ease) forwards}
-.intro .d1{animation-delay:0s}.intro .d2{animation-delay:.12s}.intro .d3{animation-delay:.24s}.intro .d4{animation-delay:.42s}.intro .d5{animation-delay:.6s}.intro .d6{animation-delay:.78s}.intro .d7{animation-delay:.96s}
+.intro .rise{opacity:0;transform:translate3d(0,8px,0);animation:introRise .9s var(--ie) forwards}
+.intro .d4{animation-delay:.75s}.intro .d5{animation-delay:.85s}.intro .d6{animation-delay:.95s}.intro .d7{animation-delay:1.05s}
+.intro .d9{animation-delay:1.45s;animation-duration:.6s}
 @keyframes introRise{to{opacity:1;transform:none}}
+/* hand-off: site hero eases in from 8px below as the overlay dissolves */
+html.intro-handoff .hero-wrap{animation:introHero .9s var(--ease,cubic-bezier(.16,1,.3,1)) .1s backwards}
+@keyframes introHero{from{opacity:0;transform:translate3d(0,8px,0)}}
 @media(prefers-reduced-motion:reduce){
-  .intro,.intro .rise{transition:none;animation:none}
-  .intro .rise{opacity:1;transform:none}
+  .intro,.intro-in{transition:opacity .3s ease}
+  .intro-glow,.ib>*,.ib-partner>*{animation:none}
+  .ib,.ib-sep,.intro .rise,.intro-bar i{animation:introFade .5s ease both}
+  .ib-sep{transform:none}
+  .intro-bar i{transform:none}
+  .intro .rise{transform:none}
+  .intro.out .intro-in{transform:none}
+  html.intro-handoff .hero-wrap{animation:none}
 }
+@keyframes introFade{from{opacity:0}to{opacity:1}}
