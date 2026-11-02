@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NAWA — Clinic Catalogue</title>
+<meta name="description" content="NAWA clinic catalogue: genetic testing, general laboratory tests and IVF consumables. Choose what fits your clinic and request a tailored quotation.">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/png" href="assets/logo-mark.png">
+<link rel="stylesheet" href="styles.css">
+<script>(function(){try{var l=(/[?&]lang=(ar|en)/.exec(location.search)||[])[1];if(!l){var c=null;try{var m=/[#&]c=([A-Za-z0-9_=-]+)/.exec(location.hash);if(m){var b=atob(m[1].replace(/-/g,"+").replace(/_/g,"/").replace(/=+$/,""));var u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);c=JSON.parse(new TextDecoder().decode(u))}}catch(e){}if(c&&typeof c.n==="string"&&c.n.trim()){var r=c.r?String(c.r).replace(/[^A-Za-z0-9-]/g,"").slice(0,24):"";l=localStorage.getItem("nawa_clinics_v1:"+(r||"n:"+c.n.trim().slice(0,120).toLowerCase())+":lang");if(l!=="ar"&&l!=="en")l=(c.l==="ar"||c.l==="en")?c.l:null}if(!l)l=localStorage.getItem("nawa_lang")}if(l==="ar"){var h=document.documentElement;h.lang="ar";h.dir="rtl"}}catch(e){}})();</script>
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="container header-in">
+    <a class="brand" href="#top" data-i18n-attr="aria-label:brand"  aria-label="NAWA"><img src="assets/logo-wordmark.png" data-i18n-attr="alt:brand" alt="NAWA" height="44"></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mainNav" data-i18n-attr="aria-label:menu" aria-label="Menu">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <button class="lang-btn" id="langBtn" type="button" lang="ar" aria-label="العربية">العربية</button>
+    <nav class="main-nav" id="mainNav" data-i18n-attr="aria-label:nav_label" aria-label="Main navigation">
+      <a href="#catalog" data-i18n="nav_catalog">Catalogue</a>
+      <a href="#how" data-i18n="nav_how">How it works</a>
+      <a href="#services" data-i18n="nav_services">Services for clinics</a>
+      <a href="#quote" data-i18n="nav_quote">Request a quotation</a>
+    </nav>
+    <a class="cart-btn" href="#quote" id="cartBtn">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span data-i18n="cart">Quotation list</span>
+      <span class="badge" id="cartBadge" aria-live="polite" aria-atomic="true">0</span>
+    </a>
+  </div>
+</header>
+
+<main>
+<section class="hero-wrap">
+  <div class="container">
+    <div class="hero">
+      <p class="eyebrow" data-i18n="eyebrow">CLINIC PARTNERSHIPS</p>
+      <h1 data-i18n="hero_h1">One laboratory partner for your clinic</h1>
+      <p class="lead" data-i18n="hero_lead">NAWA supplies your clinic with genetic testing, general laboratory tests and IVF consumables. Choose what fits your practice and we will send you a tailored quotation.</p>
+      <div class="hero-actions">
+        <a class="btn btn-white" href="#catalog" data-i18n="hero_browse">Browse the catalogue</a>
+        <a class="btn btn-outline-white" href="#quote" data-i18n="hero_quote">Request a quotation</a>
+      </div>
+      <div class="figures" id="figures" data-i18n-attr="aria-label:figs_aria" aria-label="Catalogue figures"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <h2 class="sec-title" data-i18n="svc_title">Services for clinics</h2>
+    <div class="bar"></div>
+    <p class="sec-sub" data-i18n="svc_sub">Five services that support your clinic, from pricing to clinical support.</p>
+    <div class="grid-5">
+      <article class="card">
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>
+        <h3 data-i18n="svc1_t">Test pricing</h3><p class="en ar-only">Test pricing</p>
+        <p data-i18n="svc1_d">A clear quotation tailored to your clinic, based on the tests you select.</p>
+      </article>
+      <article class="card">
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v10.5a4 4 0 1 1-4 0V4a2 2 0 1 1 4 0z"/><path d="M10 9h4"/></svg></span>
+        <h3 data-i18n="svc2_t">Sample collection</h3><p class="en ar-only">Sample collection</p>
+        <p data-i18n="svc2_d">Collection arrangements that fit your clinic's workflow.</p>
+      </article>
+      <article class="card">
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 3h13v13H1z"/><path d="M14 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="17.5" cy="18.5" r="2"/></svg></span>
+        <h3 data-i18n="svc3_t">Sample logistics</h3><p class="en ar-only">Sample logistics</p>
+        <p data-i18n="svc3_d">Coordinated transport of samples to the laboratory.</p>
+      </article>
+      <article class="card">
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+        <h3 data-i18n="svc4_t">Staff orientation</h3><p class="en ar-only">Staff orientation</p>
+        <p data-i18n="svc4_d">Guidance for your team on ordering and sample handling.</p>
+      </article>
+      <article class="card">
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></svg></span>
+        <h3 data-i18n="svc5_t">Clinical support</h3><p class="en ar-only">Clinical support</p>
+        <p data-i18n="svc5_d">A team available to answer your questions about the tests.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="how">
+  <div class="container">
+    <h2 class="sec-title" data-i18n="how_title">How it works</h2>
+    <div class="bar"></div>
+    <ol class="steps">
+      <li><span class="num">1</span><div><h3 data-i18n="step1_t">Select</h3><p data-i18n="step1_p">Select tests or products from the catalogue.</p></div></li>
+      <li><span class="num">2</span><div><h3 data-i18n="step2_t">Estimate</h3><p data-i18n="step2_p">Enter the expected monthly volume for each item.</p></div></li>
+      <li><span class="num">3</span><div><h3 data-i18n="step3_t">Send</h3><p data-i18n="step3_p">Send the request and receive a tailored quotation for your clinic.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="catalog">
+  <div class="container">
+    <h2 class="sec-title" data-i18n="cat_title">Catalogue</h2>
+    <div class="bar"></div>
+    <div class="tabs" id="tabs" role="tablist" data-i18n-attr="aria-label:tabs_aria" aria-label="Catalogues"></div>
+
+    <div class="toolbar">
+      <div class="search">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+        <label class="sr" for="q" data-i18n="search_label">Search the catalogue</label>
+        <input id="q" type="search" data-i18n-attr="placeholder:search_ph" placeholder="Search by code, test name or category" autocomplete="off">
+      </div>
+      <label class="check"><input type="checkbox" id="allCats"><span data-i18n="search_all">Search all catalogues</span></label>
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
+    </div>
+
+    <div class="explorer">
+      <aside class="cats-wrap" data-i18n-attr="aria-label:cats_aria" aria-label="Categories">
+        <div class="cats" id="cats"></div>
+      </aside>
+      <div class="list" id="list"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="quote">
+  <div class="container">
+    <h2 class="sec-title" data-i18n="quote_title">Request a quotation</h2>
+    <div class="bar"></div>
+    <p class="sec-sub" data-i18n="quote_sub">Tell us which tests your clinic would like to offer. Select catalogue items, estimate your monthly volumes and send the request to NAWA for a tailored quotation.</p>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3><span data-i18n="sel_head">Products for quotation</span> <span class="pill-count" id="selCount">0</span></h3>
+        <div class="panel-actions">
+          <button type="button" class="btn btn-ghost" id="copyLink">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span data-i18n="copy_link">Copy list link</span>
+          </button>
+          <button type="button" class="btn btn-ghost" id="clearAll" data-i18n="clear_all">Clear list</button>
+        </div>
+      </div>
+      <p class="hint" id="copyMsg" aria-live="polite"></p>
+      <div id="selected"></div>
+    </div>
+
+    <form class="panel" id="form" novalidate autocomplete="off">
+      <h3 data-i18n="form_head">Clinic and contact details</h3>
+      <div class="fields">
+        <div class="field"><label for="f_clinic"><span data-i18n="f_clinic">Clinic / organisation name</span> <b>*</b></label><input id="f_clinic" data-f="clinic" type="text" required><p class="lock-note" id="lockNote" data-i18n="f_locked" hidden>Set for your clinic</p><p class="err" id="e_clinic"></p></div>
+        <div class="field"><label for="f_city"><span data-i18n="f_city">City</span></label><input id="f_city" data-f="city" type="text"></div>
+        <div class="field"><label for="f_dept"><span data-i18n="f_dept">Department / specialty</span></label><input id="f_dept" data-f="dept" type="text"></div>
+        <div class="field"><label for="f_contact"><span data-i18n="f_contact">Contact person</span> <b>*</b></label><input id="f_contact" data-f="contact" type="text" required><p class="err" id="e_contact"></p></div>
+        <div class="field"><label for="f_title"><span data-i18n="f_title">Job title</span></label><input id="f_title" data-f="title" type="text"></div>
+        <div class="field"><label for="f_email"><span data-i18n="f_email">Business email</span></label><input id="f_email" data-f="email" type="email" dir="ltr" class="ltr-in"><p class="err" id="e_email"></p></div>
+        <div class="field"><label for="f_phone"><span data-i18n="f_phone">Phone / WhatsApp</span> <b>*</b></label><input id="f_phone" data-f="phone" type="tel" inputmode="tel" dir="ltr" class="ltr-in" required><p class="err" id="e_phone"></p></div>
+        <div class="field"><label for="f_start"><span data-i18n="f_start">Preferred start date / timeframe</span></label><input id="f_start" data-f="start" type="text" autocomplete="off"></div>
+        <div class="field"><label for="f_total"><span data-i18n="f_total">Estimated total tests per month</span></label><input id="f_total" data-f="total" type="number" min="0" step="1" inputmode="numeric" dir="ltr" class="ltr-in"></div>
+      </div>
+
+      <fieldset class="reqs">
+        <legend data-i18n="req_head">Partnership requirements</legend>
+        <div class="req-list">
+          <label class="check"><input type="checkbox" name="req" value="pricing"><span data-i18n="req_pricing">Test pricing</span></label>
+          <label class="check"><input type="checkbox" name="req" value="collection"><span data-i18n="req_collection">Sample collection</span></label>
+          <label class="check"><input type="checkbox" name="req" value="logistics"><span data-i18n="req_logistics">Sample logistics</span></label>
+          <label class="check"><input type="checkbox" name="req" value="orientation"><span data-i18n="req_orientation">Staff orientation</span></label>
+          <label class="check"><input type="checkbox" name="req" value="support"><span data-i18n="req_support">Clinical support</span></label>
+          <label class="check"><input type="checkbox" name="req" value="other"><span data-i18n="req_other">Other</span></label>
+        </div>
+      </fieldset>
+
+      <div class="field"><label for="f_notes" data-i18n="f_notes">Additional requirements / preferred reporting or logistics arrangements</label><textarea id="f_notes" data-f="notes" rows="4"></textarea></div>
+
+      <p class="err form-err" id="e_items" role="alert"></p>
+      <div class="send-row">
+        <button type="button" class="btn btn-primary glow" id="sendWa">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+          <span data-i18n="send_wa">Send via WhatsApp</span>
+        </button>
+        <button type="button" class="btn btn-navy" id="sendMail">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+          <span data-i18n="send_mail">Send by email</span>
+        </button>
+        <button type="button" class="btn btn-ghost" id="printBtn">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span data-i18n="print">Save PDF / Print</span>
+        </button>
+      </div>
+      <p class="note" id="mailNote" data-i18n="mail_note" hidden>The list is long, so the email contains a shortened version. Save the list as a PDF and attach it to your message.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="container foot-in">
+    <div class="foot-brand">
+      <img src="assets/logo-lockup-navy.png" data-i18n-attr="alt:brand" alt="NAWA" height="56">
+      <p class="legal" data-i18n="foot_l1">NAWA | Nawat Al Takwin LLC</p>
+      <p class="legal" data-i18n="foot_l2">Saudi limited liability company</p>
+      <p class="legal" data-i18n-html="foot_l3">CR National No. <span class="num-t">7053936733</span> | VAT No. <span class="num-t">314703130800003</span></p>
+    </div>
+    <ul class="contact">
+      <li><span data-i18n="foot_phone">Phone / WhatsApp</span><a href="tel:+966535923936" dir="ltr">0535923936</a> · <a href="https://wa.me/966535923936" target="_blank" rel="noopener" data-i18n="foot_wa">WhatsApp</a></li>
+      <li><span data-i18n="foot_email">Email</span><a href="mailto:contact@nawa.com.sa" dir="ltr">contact@nawa.com.sa</a></li>
+      <li><span data-i18n="foot_site">Website</span><a href="https://nawa.com.sa" target="_blank" rel="noopener" dir="ltr">nawa.com.sa</a></li>
+      <li><span data-i18n="foot_addr_l">Address</span><span data-i18n="foot_addr">Al Arid, Riyadh 13338, Saudi Arabia</span></li>
+    </ul>
+  </div>
+</footer>
+
+<div id="printDoc" class="print-doc" aria-hidden="true"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
