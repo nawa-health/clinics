@@ -71,17 +71,14 @@ input[readonly].locked{background:var(--bg);color:var(--ink-2);border-color:var(
 html[lang="en"] .hero h1{font-size:clamp(26px,4.2vw,56px)}
 h1,h2,h3{text-wrap:balance}
 .lead{font-size:16px;line-height:1.75;margin-top:16px;max-width:760px;color:#eaf4f6}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.figures{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-.figure{display:inline-flex;align-items:baseline;gap:10px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:12px 20px}
-.figure b{display:block;font-size:28px;font-weight:800;line-height:1.2;color:#fff}
-.figure span{font-size:13px;color:#d6f0f0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
+.figures{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.figure{display:inline-flex;align-items:baseline;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 14px;font-size:15px;line-height:1.5;color:#fff;font-variant-numeric:tabular-nums}
+.figure b{font-weight:700;color:#fff}
+.figure span{font-weight:400;color:#fff}
 @media(min-width:768px){
   .hero{padding:72px 56px}
   .lead{font-size:18px}
-  .figure{padding:14px 24px}
-  .figure b{font-size:36px}
-  .figure span{font-size:14px}
 }
 
 /* buttons */
@@ -389,3 +386,11 @@ html.intro-handoff .hero-wrap{animation:introHero .9s var(--ie,cubic-bezier(.22,
   html.has-bar body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 }
 @media print{.sticky-bar{display:none!important}}
+
+
+/* justified body paragraphs (wide blocks only; narrow ones stay start-aligned) */
+.lead,.sec-sub,.price-note,.send-help,.legal,.qty-hint,.note{text-align:justify;text-align-last:start;hyphens:none}
+.steps p,.card p:last-child{text-align:start;hyphens:none}
+@media(min-width:600px) and (max-width:767px){.steps p{text-align:justify;text-align-last:start}}
+@media(min-width:600px) and (max-width:1023px){.card p:last-child{text-align:justify;text-align-last:start}}
+@media(max-width:479px){.lead,.qty-hint,.note,.send-help,.legal,.sec-sub,.price-note{text-align:start}}

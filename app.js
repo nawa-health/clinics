@@ -340,7 +340,7 @@ function nawaBoot(PRE) {
     catalogs.forEach(function (c) { total += c.count; });
     var data = [[total, T('fig_items')]];
     $('#figures').innerHTML = data.map(function (d) {
-      return '<div class="figure"><b>' + d[0] + '</b><span>' + d[1] + '</span></div>';
+      return '<div class="figure"><b>' + d[0] + '</b> <span>' + d[1] + '</span></div>';
     }).join('');
   }
 
@@ -539,8 +539,8 @@ function nawaBoot(PRE) {
     var L = [T('msg_title'), T('msg_date') + today()];
     if (CFG && CFG.r) L.push(T('msg_ref', CFG.r));
     L.push('', T('msg_clinic_head'));
-    var pairs = [[T('msg_org'), d.clinic], [T('msg_city'), d.city], [T('msg_dept'), d.dept], [T('msg_contact'), d.contact], [T('msg_jt'), d.title],
-      [T('msg_email'), d.email], [T('msg_phone'), d.phone], [T('msg_start'), d.start], [T('msg_total'), d.total]];
+    var pairs = [[T('msg_org'), d.clinic], [T('msg_contact'), d.contact], [T('msg_phone'), d.phone], [T('msg_city'), d.city], [T('msg_dept'), d.dept], [T('msg_jt'), d.title],
+      [T('msg_email'), d.email], [T('msg_start'), d.start], [T('msg_total'), d.total]];
     pairs.forEach(function (p) { if (p[1]) L.push(p[0] + ': ' + p[1]); });
     if (d.req.length) L.push('', T('msg_reqs') + d.req.join(T('sep')));
     if (d.notes) L.push('', T('msg_notes') + d.notes);
@@ -669,8 +669,8 @@ function nawaBoot(PRE) {
   /* ---------- print document ---------- */
   function renderPrint() {
     var d = data(), codes = selCodes();
-    var rows = [[T('f_clinic'), d.clinic], [T('f_city'), d.city], [T('f_dept'), d.dept], [T('f_contact'), d.contact],
-      [T('f_title'), d.title], [T('f_email'), d.email], [T('f_phone'), d.phone], [T('f_start'), d.start],
+    var rows = [[T('f_clinic'), d.clinic], [T('f_contact'), d.contact], [T('f_phone'), d.phone], [T('f_city'), d.city], [T('f_dept'), d.dept],
+      [T('f_title'), d.title], [T('f_email'), d.email], [T('f_start'), d.start],
       [T('f_total'), d.total]].filter(function (r) { return r[1]; });
     var h = '<div class="ph"><img src="assets/logo-wordmark-dark.png" alt="' + esc(T('brand')) + '"><div><h1>' + T('pr_title') + '</h1></div><div class="dt">' + today() + (CFG && CFG.r ? '<br>' + esc(T('msg_ref', CFG.r)) : '') + '</div></div>';
     h += '<h2>' + T('form_head') + '</h2><div class="grid2">' + rows.map(function (r) { return '<div><span>' + r[0] + ':</span> ' + esc(r[1]) + '</div>'; }).join('') + '</div>';

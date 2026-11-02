@@ -19,7 +19,7 @@
 <meta name="twitter:title" content="NAWA — Clinic Catalogue | كتالوج نواة للعيادات">
 <meta name="twitter:image" content="https://nawa-health.github.io/clinics/assets/og-card.png">
 <link rel="icon" type="image/png" href="assets/logo-mark.png">
-<link rel="stylesheet" href="styles.css?v=1cdf402f">
+<link rel="stylesheet" href="styles.css?v=136afd0d">
 <script>(function(){try{var l=(/[?&]lang=(ar|en)/.exec(location.search)||[])[1];if(!l){var c=null,sc="";try{var m=/[#&]c=([A-Za-z0-9_=-]+)/.exec(location.hash);if(m){var b=atob(m[1].replace(/-/g,"+").replace(/_/g,"/").replace(/=+$/,""));var u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);c=JSON.parse(new TextDecoder().decode(u))}else{var q=location.search.replace(/^\?/,"").split("&"),x;for(i=0;i<q.length;i++){if((x=/^c=([A-Za-z0-9-]{2,32})$/i.exec(q[i]))){sc=x[1];break}}if(!sc)for(i=0;i<q.length;i++){if(/^[A-Za-z0-9-]{2,32}$/.test(q[i])){sc=q[i];break}}}}catch(e){}if(sc){document.documentElement.className+=" intro-pre";l=localStorage.getItem("nawa_clinics_v1:"+sc.toUpperCase()+":lang");if(l!=="ar"&&l!=="en")l=null}else if(c&&typeof c.n==="string"&&c.n.trim()){document.documentElement.className+=" intro-pre";var r=c.r?String(c.r).replace(/[^A-Za-z0-9-]/g,"").slice(0,24):"";l=localStorage.getItem("nawa_clinics_v1:"+(r||"n:"+c.n.trim().slice(0,120).toLowerCase())+":lang");if(l!=="ar"&&l!=="en")l=(c.l==="ar"||c.l==="en")?c.l:null}if(!l)l=localStorage.getItem("nawa_lang")}if(l==="ar"){var h=document.documentElement;h.lang="ar";h.dir="rtl"}}catch(e){}})();</script>
 </head>
 <body>
@@ -52,10 +52,10 @@
       <p class="eyebrow" data-i18n="eyebrow">CLINIC PARTNERSHIPS</p>
       <h1 data-i18n="hero_h1">One laboratory partner for your clinic</h1>
       <p class="lead" data-i18n="hero_lead">NAWA supplies your clinic with genetic testing, general laboratory tests and IVF consumables. Choose what fits your practice and we will send you a tailored quotation.</p>
+      <div class="figures" id="figures" data-i18n-attr="aria-label:figs_aria" aria-label="Catalogue figures"></div>
       <div class="hero-actions">
         <a class="btn btn-white" href="#catalog" data-i18n="hero_browse">Browse the catalogue</a>
       </div>
-      <div class="figures" id="figures" data-i18n-attr="aria-label:figs_aria" aria-label="Catalogue figures"></div>
     </div>
   </div>
 </section>
@@ -160,12 +160,12 @@
       <h3 data-i18n="form_head">Clinic and contact details</h3>
       <div class="fields">
         <div class="field"><label for="f_clinic"><span data-i18n="f_clinic">Clinic / organisation name</span> <b>*</b></label><input id="f_clinic" data-f="clinic" type="text" required><p class="lock-note" id="lockNote" data-i18n="f_locked" hidden>Set for your clinic</p><p class="err" id="e_clinic"></p></div>
+        <div class="field"><label for="f_contact"><span data-i18n="f_contact">Contact person</span> <b>*</b></label><input id="f_contact" data-f="contact" type="text" required><p class="err" id="e_contact"></p></div>
+        <div class="field"><label for="f_phone"><span data-i18n="f_phone">Phone / WhatsApp</span> <b>*</b></label><input id="f_phone" data-f="phone" type="tel" inputmode="tel" dir="ltr" class="ltr-in" required><p class="err" id="e_phone"></p></div>
         <div class="field"><label for="f_city"><span data-i18n="f_city">City</span></label><input id="f_city" data-f="city" type="text"></div>
         <div class="field"><label for="f_dept"><span data-i18n="f_dept">Department / specialty</span></label><input id="f_dept" data-f="dept" type="text"></div>
-        <div class="field"><label for="f_contact"><span data-i18n="f_contact">Contact person</span> <b>*</b></label><input id="f_contact" data-f="contact" type="text" required><p class="err" id="e_contact"></p></div>
         <div class="field"><label for="f_title"><span data-i18n="f_title">Job title</span></label><input id="f_title" data-f="title" type="text"></div>
         <div class="field"><label for="f_email"><span data-i18n="f_email">Business email</span></label><input id="f_email" data-f="email" type="email" dir="ltr" class="ltr-in"><p class="err" id="e_email"></p></div>
-        <div class="field"><label for="f_phone"><span data-i18n="f_phone">Phone / WhatsApp</span> <b>*</b></label><input id="f_phone" data-f="phone" type="tel" inputmode="tel" dir="ltr" class="ltr-in" required><p class="err" id="e_phone"></p></div>
         <div class="field"><label for="f_start"><span data-i18n="f_start">Preferred start date / timeframe</span></label><input id="f_start" data-f="start" type="text" autocomplete="off"></div>
         <div class="field"><label for="f_total"><span data-i18n="f_total">Estimated total tests per month</span></label><input id="f_total" data-f="total" type="number" min="0" step="1" inputmode="numeric" dir="ltr" class="ltr-in"></div>
       </div>
@@ -235,7 +235,7 @@
 
 <div id="printDoc" class="print-doc" aria-hidden="true"></div>
 
-<script src="data.js?v=1cdf402f"></script>
-<script src="app.js?v=1cdf402f"></script>
+<script src="data.js?v=136afd0d"></script>
+<script src="app.js?v=136afd0d"></script>
 </body>
 </html>
