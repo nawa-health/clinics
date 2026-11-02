@@ -142,7 +142,7 @@
       pr_f1: 'NAWA | Nawat Al Takwin LLC · Saudi limited liability company · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'CR National No. 7053936733 · VAT No. 314703130800003 · Al Arid, Riyadh 13338, Saudi Arabia',
       eyebrow_for: function (n) { return 'PREPARED FOR ' + n; },
-      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome', intro_ready: 'Your NAWA clinic catalogue is ready', intro_enter: 'Enter', intro_skip: 'Skip',
+      intro_label: 'Welcome to your NAWA clinic catalogue', intro_welcome: 'Welcome', intro_ready: 'Your NAWA clinic catalogue is ready', intro_enter: 'Next',
       f_locked: 'Set for your clinic', msg_ref: function (r) { return 'Reference: ' + r; },
       desc: 'desc_en', unit: 'unit_en'
     },
@@ -213,7 +213,7 @@
       pr_f1: 'نواة التكوين — شركة ذات مسؤولية محدودة · 0535923936 · contact@nawa.com.sa · nawa.com.sa',
       pr_f2: 'السجل التجاري 7053936733 · الرقم الضريبي 314703130800003 · العارض، الرياض 13338، المملكة العربية السعودية',
       eyebrow_for: function (n) { return 'مُعدّ خصيصًا لـ ' + n; },
-      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بكم', intro_ready: 'كتالوج نواة المُعدّ لكم جاهز', intro_enter: 'دخول', intro_skip: 'تخطّي',
+      intro_label: 'أهلًا بكم في كتالوج نواة المُعدّ لعيادتكم', intro_welcome: 'أهلًا بكم', intro_ready: 'كتالوج نواة المُعدّ لكم جاهز', intro_enter: 'التالي',
       f_locked: 'محدّد لعيادتكم', msg_ref: function (r) { return 'المرجع: ' + r; },
       desc: 'desc', unit: 'unit'
     }
@@ -385,7 +385,7 @@
     $('#cats').innerHTML = chipsHtml;
     $('#list').innerHTML = listHtml || '<div class="empty">' + T('empty', searchAll) + '</div>';
     $('#resultCount').textContent = q ? T('res_q', total) : T('res_all', total);
-    refreshAddAll(); fixRaGaps();
+    refreshAddAll();
   }
 
   function refreshAddAll() {
@@ -650,28 +650,10 @@
     errKeys && Object.keys(errKeys).forEach(function (id) { var e = $('#e_' + id); if (e) e.textContent = errKeys[id] ? T(errKeys[id]) : ''; });
     if (copyKey) $('#copyMsg').textContent = T(copyKey);
   }
-  /* gap after ر/ز/ژ in Arabic headings (they never join forward; bold glyph tail collides with next letter) */
-  function fixRaGaps() {
-    if (lang !== 'ar') return;
-    var re = /([رزژ])(?=[ء-ي])/;
-    $$('h1,h2,h3,.sec-title,.cat-head h3').forEach(function (h) {
-      if (h.closest('.print-doc')) return;
-      var w = document.createTreeWalker(h, NodeFilter.SHOW_TEXT, null), n, list = [];
-      while ((n = w.nextNode())) { if (re.test(n.nodeValue) && !(n.parentNode.classList && n.parentNode.classList.contains('rgap'))) list.push(n); }
-      list.forEach(function (t) {
-        var parts = t.nodeValue.split(/([رزژ])(?=[ء-ي])/), frag = document.createDocumentFragment();
-        for (var i = 0; i < parts.length; i++) {
-          if (i % 2 === 1) { frag.appendChild(document.createTextNode(parts[i])); var sp = document.createElement('span'); sp.className = 'rgap'; sp.setAttribute('aria-hidden', 'true'); frag.appendChild(sp); }
-          else if (parts[i]) frag.appendChild(document.createTextNode(parts[i]));
-        }
-        t.parentNode.replaceChild(frag, t);
-      });
-    });
-  }
   function renderAll() {
     var root = document.documentElement;
     root.lang = lang; root.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    applyStatic(); renderFigures(); renderTabs(); renderCatalog(); renderSelected(); renderPrint(); fixRaGaps();
+    applyStatic(); renderFigures(); renderTabs(); renderCatalog(); renderSelected(); renderPrint();
   }
   function currentAnchor() {
     var best = null;
@@ -706,13 +688,10 @@
   }
   function showIntro() {
     if (!CFG) return;
-    var key = 'nawa_intro:' + (CFG.r || 'n:' + CFG.n.toLowerCase());
-    try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch (e) { }
-    var ini = initials(CFG.n), prev = document.activeElement, done = false, timer, ov = document.createElement('div');
+    var ini = initials(CFG.n), prev = document.activeElement, done = false, ov = document.createElement('div');
     ov.className = 'intro'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', T('intro_label'));
     ov.innerHTML =
       '<svg class="intro-grain" aria-hidden="true" focusable="false"><filter id="introGrain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="ur' + 'l(#introGrain)"/></svg>' +
-      '<button type="button" class="intro-skip rise d1">' + esc(T('intro_skip')) + '</button>' +
       '<div class="intro-in">' +
         '<div class="intro-badges">' +
           '<div class="ib ib-nawa rise d1"><img src="assets/logo-mark-white.png" alt=""></div>' +
@@ -738,9 +717,9 @@
     } else mono();
     document.body.appendChild(ov);
     document.documentElement.classList.add('intro-lock');
-    var enter = ov.querySelector('.intro-enter'), skip = ov.querySelector('.intro-skip');
+    var enter = ov.querySelector('.intro-enter');
     function close() {
-      if (done) return; done = true; clearTimeout(timer);
+      if (done) return; done = true;
       document.removeEventListener('keydown', onKey, true);
       ov.classList.add('out');
       document.documentElement.classList.remove('intro-lock');
@@ -751,12 +730,11 @@
       if (e.key === 'Escape') { e.preventDefault(); close(); }
       else if (e.key === 'Tab') {
         e.preventDefault();
-        (document.activeElement === enter ? skip : enter).focus();
+        enter.focus();
       }
     }
     document.addEventListener('keydown', onKey, true);
-    enter.addEventListener('click', close); skip.addEventListener('click', close);
-    timer = setTimeout(close, 3200);
+    enter.addEventListener('click', close);
     enter.focus({ preventScroll: true });
   }
 
@@ -767,6 +745,7 @@
   renderAll();
   if (CFG) save();
   showIntro();
+  document.documentElement.classList.remove('intro-pre');
   if (fromHash) {
     save();
     try { history.replaceState(null, '', location.pathname + location.search + (CFG ? '#c=' + CFG.raw : '')); } catch (e) { }
